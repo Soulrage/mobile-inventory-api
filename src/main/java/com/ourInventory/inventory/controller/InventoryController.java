@@ -1,5 +1,6 @@
 package com.ourInventory.inventory.controller;
 
+import com.ourInventory.inventory.controller.operations.InventoryOperations;
 import com.ourInventory.inventory.dto.ItemDTO;
 import com.ourInventory.inventory.entity.ItemEntity;
 import com.ourInventory.inventory.mapper.ItemMapper;
@@ -27,7 +28,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/items")
 @AllArgsConstructor
-public class InventoryController {
+public class InventoryController implements InventoryOperations {
 
     UserService userService;
 
@@ -41,12 +42,11 @@ public class InventoryController {
 
     JwtUtils jwtUtils;
 
+
     @PatchMapping("/update")
     public ResponseEntity<?> updateHandler(
             @RequestBody ItemDTO itemDTO,
             @RequestHeader("Authorization") String fullToken) {
-
-
         return updateService.updateItem(itemDTO, fullToken) ?
                 ResponseEntity.ok().build() :
                 ResponseEntity.notFound().build();
@@ -75,16 +75,18 @@ public class InventoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ItemEntity> deleteHandler(@PathVariable Long id) {
+    public ResponseEntity<?> deleteHandler(@PathVariable Long id) {
         if (deleteService.removeById(id)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<ItemEntity>> indexAllHandler() {
-        return ResponseEntity.ok(indexService.listItems());
+    @GetMapping("/list")
+    public ResponseEntity<?> indexAllHandler() {
+        List<ItemDTO> lst = indexService.listItems().stream().map(
+                ItemMapper.INSTANCE::toDto).toList();
+        return ResponseEntity.ok(lst);
     }
 
 

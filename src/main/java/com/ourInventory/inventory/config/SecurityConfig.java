@@ -44,9 +44,13 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry ->
-                        registry.requestMatchers("/items/**").hasAnyRole("ADMIN", "USER")
+                        registry.requestMatchers("/items/**").authenticated()
+                                //работа с предметами
                                 .requestMatchers("/users/**").hasRole("ADMIN")
-                                .requestMatchers("/open/**").permitAll())
+                                //работа с юзерами
+                                .requestMatchers("/authentication/**").permitAll()
+                                .anyRequest().permitAll())
+                                //возможность авторизоваться
                 .sessionManagement(configurer ->
                         configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

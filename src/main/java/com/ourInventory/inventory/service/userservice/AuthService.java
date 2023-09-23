@@ -3,19 +3,17 @@ package com.ourInventory.inventory.service.userservice;
 import com.ourInventory.inventory.dto.JwtRequest;
 import com.ourInventory.inventory.dto.JwtResponse;
 import com.ourInventory.inventory.dto.RegistrationUserDto;
-import com.ourInventory.inventory.dto.UserDTO;
-import com.ourInventory.inventory.entity.UserEntity;
 import com.ourInventory.inventory.utils.JwtUtils;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Optional;
 
 @Service
 @Setter
@@ -30,23 +28,28 @@ public class AuthService {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
+    public Optional<JwtResponse> createAuthToken(@RequestBody JwtRequest authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return Optional.empty();
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = utils.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(token));
+        return Optional.of(new JwtResponse(token));
     }
 
-    public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
+    public boolean createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
         if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
-            return ResponseEntity.badRequest().build();
+            return false;
         }
-        UserEntity user = userService.createNewUser(registrationUserDto);
-        return ResponseEntity.ok(new UserDTO(user.getId(), user.getUsername(), user.getPassword()));
+        userService.createNewUser(registrationUserDto);
+        return true;
+    }
+
+    public boolean removeUser(String userName) {
+        return userService.removeUserByName(userName);
+
     }
 
 }

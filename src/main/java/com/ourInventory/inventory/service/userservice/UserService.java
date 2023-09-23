@@ -47,12 +47,17 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public UserEntity createNewUser(RegistrationUserDto registrationUserDto) {
+    public void createNewUser(RegistrationUserDto registrationUserDto) {
         UserEntity user = new UserEntity();
         user.setUsername(registrationUserDto.getUsername());
         user.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));
         user.setRole("USER");
-        return userRepository.save(user);
+        userRepository.save(user);
+    }
+
+    public boolean removeUserByName(String username) {
+        long res = userRepository.deleteByUsername(username);
+        return res != 0;
     }
 
 }
