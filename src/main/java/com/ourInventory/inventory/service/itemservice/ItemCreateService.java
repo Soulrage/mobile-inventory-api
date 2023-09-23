@@ -1,6 +1,6 @@
 package com.ourInventory.inventory.service.itemservice;
 
-import com.ourInventory.inventory.dto.ItemDTO;
+import com.ourInventory.inventory.dto.ItemCreationRequestDTO;
 import com.ourInventory.inventory.entity.ItemEntity;
 import com.ourInventory.inventory.entity.UserEntity;
 import com.ourInventory.inventory.mapper.ItemMapper;
@@ -24,13 +24,13 @@ public class ItemCreateService {
 
     ItemIndexService indexService;
 
-    public boolean createItem(ItemDTO dto, String fulltoken) {
+    public boolean createItem(ItemCreationRequestDTO dto, String fulltoken) {
         String username = jwtUtils.getUsername(fulltoken.substring(7));
         Optional<UserEntity> userId = userService.loadIdByName(username);
-        if (userId.isPresent()) {
-            dto.setUserId(userId.get().getId());
-        }
         ItemEntity entity = ItemMapper.INSTANCE.toEntity(dto);
+        if (userId.isPresent()) {
+            entity.setUserId(userId.get().getId());
+        }
         repository.save(entity);
         return true;
     }

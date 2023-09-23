@@ -3,7 +3,7 @@ package com.ourInventory.inventory.dto;
 import lombok.Data;
 
 @Data
-public class JwtRequest {
+public class RegistrationUserDTO {
 
     private String username;
 

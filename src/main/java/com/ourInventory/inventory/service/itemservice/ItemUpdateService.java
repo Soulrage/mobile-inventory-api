@@ -1,6 +1,6 @@
 package com.ourInventory.inventory.service.itemservice;
 
-import com.ourInventory.inventory.dto.ItemDTO;
+import com.ourInventory.inventory.dto.ItemUpdateRequestDTO;
 import com.ourInventory.inventory.entity.ItemEntity;
 import com.ourInventory.inventory.entity.UserEntity;
 import com.ourInventory.inventory.mapper.ItemMapper;
@@ -25,7 +25,7 @@ public class ItemUpdateService {
     ItemIndexService indexService;
 
 
-    public boolean updateItem(ItemDTO dto, String fulltoken) {
+    public boolean updateItem(ItemUpdateRequestDTO dto, String fulltoken) {
         String username = jwtUtils.getUsername(fulltoken.substring(7));
         Optional<UserEntity> userId = userService.loadIdByName(username);
 

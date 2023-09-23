@@ -1,6 +1,6 @@
 package com.ourInventory.inventory.service.userservice;
 
-import com.ourInventory.inventory.dto.RegistrationUserDto;
+import com.ourInventory.inventory.dto.RegistrationUserDTO;
 import com.ourInventory.inventory.entity.UserEntity;
 import com.ourInventory.inventory.repository.UserRepository;
 import lombok.NoArgsConstructor;
@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public void createNewUser(RegistrationUserDto registrationUserDto) {
+    public void createNewUser(RegistrationUserDTO registrationUserDto) {
         UserEntity user = new UserEntity();
         user.setUsername(registrationUserDto.getUsername());
         user.setPassword(passwordEncoder.encode(registrationUserDto.getPassword()));

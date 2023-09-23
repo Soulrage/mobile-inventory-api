@@ -1,6 +1,6 @@
 package com.ourInventory.inventory.mapper;
 
-import com.ourInventory.inventory.dto.UserDTO;
+import com.ourInventory.inventory.dto.RegistrationUserDTO;
 import com.ourInventory.inventory.entity.UserEntity;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.CollectionMappingStrategy;
@@ -24,13 +24,15 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "role", ignore = true)
-    UserEntity toEntity(UserDTO userDTO);
+    UserEntity toEntity(RegistrationUserDTO userRegistrationDTO);
 
-    UserDTO toDto(UserEntity userEntity);
+    RegistrationUserDTO toDto(UserEntity userEntity);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "role", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    UserEntity partialUpdate(UserDTO userDTO, @MappingTarget UserEntity userEntity);
+    UserEntity partialUpdate(RegistrationUserDTO userRegistrationDTO, @MappingTarget UserEntity userEntity);
 
 }

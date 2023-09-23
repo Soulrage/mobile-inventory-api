@@ -1,7 +1,7 @@
 package com.ourInventory.inventory.controller;
 
 import com.ourInventory.inventory.controller.operations.UserOperations;
-import com.ourInventory.inventory.dto.RegistrationUserDto;
+import com.ourInventory.inventory.dto.RegistrationUserDTO;
 import com.ourInventory.inventory.service.userservice.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class UserController implements UserOperations {
 
     AuthService authService;
 
-    public ResponseEntity<?> createNewUser(RegistrationUserDto registrationUserDto) {
+    public ResponseEntity<?> createNewUser(RegistrationUserDTO registrationUserDto) {
         boolean created = authService.createNewUser(registrationUserDto);
         if (created) {
             return ResponseEntity.ok().build();

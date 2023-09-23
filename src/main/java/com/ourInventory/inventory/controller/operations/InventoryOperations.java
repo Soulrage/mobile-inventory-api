@@ -1,6 +1,8 @@
 package com.ourInventory.inventory.controller.operations;
 
-import com.ourInventory.inventory.dto.ItemDTO;
+import com.ourInventory.inventory.dto.ItemCreationRequestDTO;
+import com.ourInventory.inventory.dto.ItemCreationResponseDTO;
+import com.ourInventory.inventory.dto.ItemUpdateRequestDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,14 +29,14 @@ public interface InventoryOperations {
     })
     @PatchMapping("/update")
     ResponseEntity<?> updateHandler(
-            @RequestBody ItemDTO itemDTO,
+            @RequestBody ItemUpdateRequestDTO dto,
             @RequestHeader("Authorization") String fullToken);
 
     @Operation(description = "Возвращает данные о предмете")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Успешно обновлено",
                     content = @Content(schema = @Schema(
-                            implementation = ItemDTO.class
+                            implementation = ItemCreationRequestDTO.class
                     ))),
             @ApiResponse(responseCode = "404", description = "Предмет не найден")
     })
@@ -43,12 +45,14 @@ public interface InventoryOperations {
 
     @Operation(description = "Создаёт новый предмет")
     @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Успешно создано"),
+            @ApiResponse(responseCode = "200", description = "Успешно создано",
+                    content = @Content(
+                            schema = @Schema(implementation = ItemCreationResponseDTO.class))),
             @ApiResponse(responseCode = "400", description = "Предмет уже существует")
     })
     @PutMapping("/create")
     ResponseEntity<?> createHandle(
-            @RequestBody ItemDTO itemDTO,
+            @RequestBody ItemCreationRequestDTO dto,
             @RequestHeader("Authorization") String fulltoken);
 
     @Operation(description = "Удаляет предмет из базы")
@@ -64,7 +68,7 @@ public interface InventoryOperations {
             @ApiResponse(responseCode = "200", description = "Все найденные предметы",
                     content = @Content(array = @ArraySchema(arraySchema =
                     @Schema(implementation = List.class),
-                    schema = @Schema(implementation = ItemDTO.class))))
+                            schema = @Schema(implementation = ItemCreationRequestDTO.class))))
     })
     @GetMapping("/list")
     ResponseEntity<?> indexAllHandler();

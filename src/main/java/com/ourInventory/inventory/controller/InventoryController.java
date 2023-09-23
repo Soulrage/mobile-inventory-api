@@ -1,7 +1,8 @@
 package com.ourInventory.inventory.controller;
 
 import com.ourInventory.inventory.controller.operations.InventoryOperations;
-import com.ourInventory.inventory.dto.ItemDTO;
+import com.ourInventory.inventory.dto.ItemCreationRequestDTO;
+import com.ourInventory.inventory.dto.ItemUpdateRequestDTO;
 import com.ourInventory.inventory.entity.ItemEntity;
 import com.ourInventory.inventory.mapper.ItemMapper;
 import com.ourInventory.inventory.service.itemservice.ItemCreateService;
@@ -45,9 +46,9 @@ public class InventoryController implements InventoryOperations {
 
     @PatchMapping("/update")
     public ResponseEntity<?> updateHandler(
-            @RequestBody ItemDTO itemDTO,
+            @RequestBody ItemUpdateRequestDTO itemUpdateRequestDTO,
             @RequestHeader("Authorization") String fullToken) {
-        return updateService.updateItem(itemDTO, fullToken) ?
+        return updateService.updateItem(itemUpdateRequestDTO, fullToken) ?
                 ResponseEntity.ok().build() :
                 ResponseEntity.notFound().build();
     }
@@ -65,9 +66,9 @@ public class InventoryController implements InventoryOperations {
 
     @PutMapping("/create")
     public ResponseEntity<?> createHandle(
-            @RequestBody ItemDTO itemDTO,
+            @RequestBody ItemCreationRequestDTO itemCreationRequestDTO,
             @RequestHeader("Authorization") String fulltoken) {
-        boolean created = createService.createItem(itemDTO, fulltoken);
+        boolean created = createService.createItem(itemCreationRequestDTO, fulltoken);
         if (!created) {
             return ResponseEntity.badRequest().build();
         }
@@ -84,7 +85,7 @@ public class InventoryController implements InventoryOperations {
 
     @GetMapping("/list")
     public ResponseEntity<?> indexAllHandler() {
-        List<ItemDTO> lst = indexService.listItems().stream().map(
+        List<ItemCreationRequestDTO> lst = indexService.listItems().stream().map(
                 ItemMapper.INSTANCE::toDto).toList();
         return ResponseEntity.ok(lst);
     }

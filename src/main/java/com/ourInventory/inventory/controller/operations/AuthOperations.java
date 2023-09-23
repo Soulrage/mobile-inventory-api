@@ -1,7 +1,7 @@
 package com.ourInventory.inventory.controller.operations;
 
-import com.ourInventory.inventory.dto.JwtRequest;
-import com.ourInventory.inventory.dto.JwtResponse;
+import com.ourInventory.inventory.dto.JwtRequestDTO;
+import com.ourInventory.inventory.dto.JwtResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,10 +20,10 @@ public interface AuthOperations {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Успешно",
                     content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = JwtResponse.class)))
+                            schema = @Schema(implementation = JwtResponseDTO.class)))
     }
     )
     @PostMapping("/auth")
-    ResponseEntity<?> createAuthToken(@RequestBody JwtRequest request);
+    ResponseEntity<?> createAuthToken(@RequestBody JwtRequestDTO request);
 
 }

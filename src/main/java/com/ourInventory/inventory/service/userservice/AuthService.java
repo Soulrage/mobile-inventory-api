@@ -1,8 +1,8 @@
 package com.ourInventory.inventory.service.userservice;
 
-import com.ourInventory.inventory.dto.JwtRequest;
-import com.ourInventory.inventory.dto.JwtResponse;
-import com.ourInventory.inventory.dto.RegistrationUserDto;
+import com.ourInventory.inventory.dto.JwtRequestDTO;
+import com.ourInventory.inventory.dto.JwtResponseDTO;
+import com.ourInventory.inventory.dto.RegistrationUserDTO;
 import com.ourInventory.inventory.utils.JwtUtils;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class AuthService {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    public Optional<JwtResponse> createAuthToken(@RequestBody JwtRequest authRequest) {
+    public Optional<JwtResponseDTO> createAuthToken(@RequestBody JwtRequestDTO authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
@@ -36,10 +36,10 @@ public class AuthService {
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = utils.generateToken(userDetails);
-        return Optional.of(new JwtResponse(token));
+        return Optional.of(new JwtResponseDTO(token));
     }
 
-    public boolean createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
+    public boolean createNewUser(@RequestBody RegistrationUserDTO registrationUserDto) {
         if (userService.findByUsername(registrationUserDto.getUsername()).isPresent()) {
             return false;
         }

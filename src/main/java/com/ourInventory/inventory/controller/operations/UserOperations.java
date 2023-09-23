@@ -1,6 +1,6 @@
 package com.ourInventory.inventory.controller.operations;
 
-import com.ourInventory.inventory.dto.RegistrationUserDto;
+import com.ourInventory.inventory.dto.RegistrationUserDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -22,7 +22,7 @@ public interface UserOperations {
             @ApiResponse(responseCode = "204", description = "регистрация успешна"),
             @ApiResponse(responseCode = "401", description = "такой пользователь уже существует")
     })
-    ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto);
+    ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDTO registrationUserDto);
 
     @Operation(summary = "Удаляет пользователя по имени",
             description = "Удаляет пользователя по имени, имя передаётся" +

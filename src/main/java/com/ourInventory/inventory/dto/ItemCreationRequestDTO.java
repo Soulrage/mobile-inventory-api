@@ -16,10 +16,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ItemDTO implements Serializable {
-
-    private Long id;
-
+public class ItemCreationRequestDTO implements Serializable {
     @NotNull
     @Size(max = 300)
     private String itemName;
@@ -30,8 +27,4 @@ public class ItemDTO implements Serializable {
 
     @NotNull
     private Float price;
-
-    @Nullable
-    private Long userId;
-
 }

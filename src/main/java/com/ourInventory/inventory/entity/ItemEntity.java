@@ -2,9 +2,12 @@ package com.ourInventory.inventory.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -15,7 +18,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Entity
-@Table(name = "inventory", schema = "item_schema")
+@Table(name = "inventory", schema = "public")
 @Accessors(chain = true)
 public class ItemEntity {
 
@@ -40,5 +43,9 @@ public class ItemEntity {
 
     @Column(name = "user_added_id")
     private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_added_id")
+    private ItemEntity userAdded;
 
 }

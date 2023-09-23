@@ -8,26 +8,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.io.Serializable;
-
-/**
- * DTO for {@link com.ourInventory.inventory.entity.UserEntity}
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDTO implements Serializable {
+@Accessors(chain = true)
+public class ItemUpdateRequestDTO {
 
     private Long id;
 
     @NotNull
-    @Size(max = 100)
-    private String username;
+    @Size(max = 300)
+    private String itemName;
 
     @NotNull
-    @Size(max = 50)
-    private String password;
+    @Size(max = 30)
+    private String inventoryNumber;
+
+    @NotNull
+    private Float price;
 
 }

@@ -5,16 +5,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "users", schema = "item_schema")
+@Table(name = "users", schema = "public")
 public class UserEntity {
 
     @Id
@@ -36,5 +40,6 @@ public class UserEntity {
     @NotNull
     @Column(name = "password", nullable = false, length = 50)
     private String password;
+
 
 }
