@@ -50,7 +50,7 @@ public class SecurityConfig {
                                 //работа с юзерами
                                 .requestMatchers("/authentication/**").permitAll()
                                 .anyRequest().permitAll())
-                                //возможность авторизоваться
+                //возможность авторизоваться
                 .sessionManagement(configurer ->
                         configurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))

@@ -24,9 +24,9 @@ public class AuthController implements AuthOperations {
     public ResponseEntity<?> createAuthToken(JwtRequestDTO authRequest) {
         Optional<JwtResponseDTO> jwtResponse = authService.createAuthToken(authRequest);
         if (jwtResponse.isPresent()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(jwtResponse.get());
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.notFound().build();
 
     }
 

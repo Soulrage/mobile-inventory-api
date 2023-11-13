@@ -29,8 +29,7 @@ public interface InventoryOperations {
     })
     @PatchMapping("/update")
     ResponseEntity<?> updateHandler(
-            @RequestBody ItemUpdateRequestDTO dto,
-            @RequestHeader("Authorization") String fullToken);
+            @RequestBody ItemUpdateRequestDTO dto);
 
     @Operation(description = "Возвращает данные о предмете")
     @ApiResponses({

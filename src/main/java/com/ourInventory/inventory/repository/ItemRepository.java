@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ItemRepository extends JpaRepository<ItemEntity, Long> {
 
-    boolean removeById(Long id);
+    long removeById(Long id);
+
+
 
 
 }

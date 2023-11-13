@@ -19,16 +19,16 @@ public class UserController implements UserOperations {
     public ResponseEntity<?> createNewUser(RegistrationUserDTO registrationUserDto) {
         boolean created = authService.createNewUser(registrationUserDto);
         if (created) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
 
     public ResponseEntity<?> deleteUser(String name) {
         if (authService.removeUser(name)) {
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.notFound().build();
     }
 
 }

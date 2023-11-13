@@ -28,4 +28,5 @@ public class ItemUpdateRequestDTO {
     @NotNull
     private Float price;
 
+    private byte[] bytes;
 }

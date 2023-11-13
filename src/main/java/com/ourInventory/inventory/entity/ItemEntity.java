@@ -15,10 +15,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "inventory", schema = "public")
+@Table(name = "inventory", schema = "item_schema")
 @Accessors(chain = true)
 public class ItemEntity {
 
@@ -41,11 +43,11 @@ public class ItemEntity {
     @Column(name = "price", nullable = false)
     private Float price;
 
-    @Column(name = "user_added_id")
-    private Long userId;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_added_id")
-    private ItemEntity userAdded;
+    private UserEntity userAdded;
+
+    @Column(name = "pic_uuid")
+    private UUID uuid;
 
 }
